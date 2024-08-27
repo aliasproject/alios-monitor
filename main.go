@@ -24,6 +24,12 @@ type Metric struct {
 }
 
 func main() {
+	// Confirm Arguments
+	if len(os.Args) < 2 {
+		fmt.Println("Error: Usage: alios-monitor <report-url>")
+		os.Exit(1)
+	}
+
 	// Previous stats for comparison
 	var prevStats servermetrics.CPUStats
 	var err error
@@ -99,11 +105,7 @@ func sendMetric(metric Metric) error {
 		return err
 	}
 
-
-
-    fmt.Println(os.Args[1])
-
-	resp, err := http.Post("https://alios.test/metrics", "application/json", bytes.NewBuffer(data))
+	resp, err := http.Post(os.Args[1], "application/json", bytes.NewBuffer(data))
 	if err != nil {
 		return err
 	}
