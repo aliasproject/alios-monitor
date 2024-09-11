@@ -14,13 +14,10 @@ import (
 
 // Metric represents the structure of the metric to send
 type Metric struct {
-	CPUUsage    float64 `json:"cpu_usage"`
-	MemoryTotal uint64  `json:"memory_total"`
-	MemoryUsed  uint64  `json:"memory_used"`
-	DiskTotal   uint64  `json:"disk_total"`
-	DiskUsed    uint64  `json:"disk_used"`
-	DiskUsedPct float64 `json:"disk_used_pct"`
-	Timestamp   int64   `json:"timestamp"`
+	CPU       servermetrics.CPUStats    `json:"cpu"`
+	Memory    servermetrics.MemoryStats `json:"memory"`
+	Disk      servermetrics.DiskStats   `json:"disk"`
+	Timestamp int64                     `json:"timestamp"`
 }
 
 func main() {
@@ -31,11 +28,11 @@ func main() {
 	}
 
 	// Previous stats for comparison
-	var prevStats servermetrics.CPUStats
+	var prevCPUStats servermetrics.CPUStats
 	var err error
 
 	// Initialize previous stats
-	prevStats, err = servermetrics.GetCPUStats()
+	prevCPUStats, err = servermetrics.GetCPUStats()
 	if err != nil {
 		fmt.Println("Error getting initial CPU stats:", err)
 		return
@@ -49,7 +46,7 @@ func main() {
 		select {
 		case <-ticker.C:
 			// Collect new CPU stats
-			currentStats, err := servermetrics.GetCPUStats()
+			currentCPUStats, err := servermetrics.GetCPUStats()
 			if err != nil {
 				fmt.Println("Error collecting CPU stats:", err)
 				continue
@@ -70,20 +67,17 @@ func main() {
 			}
 
 			// Calculate CPU usage based on the difference between current and previous stats
-			cpuUsage := servermetrics.CalculateCPUUsage(prevStats, currentStats)
+			cpuUsage := servermetrics.CalculateCPUUsage(prevCPUStats, currentCPUStats)
 
 			// Update previous stats
-			prevStats = currentStats
+			prevCPUStats = currentCPUStats
 
 			// Create a metric struct
 			metric := Metric{
-				CPUUsage:    cpuUsage,
-				MemoryTotal: memoryStats.Total,
-				MemoryUsed:  memoryStats.Used,
-				DiskTotal:   diskStats.Total,
-				DiskUsed:    diskStats.Used,
-				DiskUsedPct: diskStats.UsedPct,
-				Timestamp:   time.Now().Unix(),
+				CPU:       cpuUsage,
+				Memory:    memoryStats,
+				Disk:      diskStats,
+				Timestamp: time.Now().Unix(),
 			}
 
 			// Send the metric to the remote server

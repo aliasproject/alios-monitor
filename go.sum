@@ -2,3 +2,7 @@ github.com/aliasproject/servermetrics v0.0.0-20240827145746-456dcb4bd75c h1:Vrmu
 github.com/aliasproject/servermetrics v0.0.0-20240827145746-456dcb4bd75c/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
 github.com/aliasproject/servermetrics v0.0.0-20240827155443-e1dc76c18f69 h1:7C5FrO+8beX5LxO1GIPihlX1f9s+z72bFdYiAepmdYk=
 github.com/aliasproject/servermetrics v0.0.0-20240827155443-e1dc76c18f69/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
+github.com/aliasproject/servermetrics v0.0.0-20240907185703-d59a34c633cd h1:Eal9RnHExIyjfwOUbLdnm85VDtS9HlkVBY5DVcpETWM=
+github.com/aliasproject/servermetrics v0.0.0-20240907185703-d59a34c633cd/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
+github.com/aliasproject/servermetrics v0.0.0-20240911165437-35fd84d58a7a h1:HEOG/4qRxNBUw9c+FUR1uDOG1kemDn74onXVI+1SZ14=
+github.com/aliasproject/servermetrics v0.0.0-20240911165437-35fd84d58a7a/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
