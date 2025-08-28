@@ -14,10 +14,11 @@ import (
 
 // Metric represents the structure of the metric to send
 type Metric struct {
-	CPU       servermetrics.CPUStats    `json:"cpu"`
-	Memory    servermetrics.MemoryStats `json:"memory"`
-	Disk      servermetrics.DiskStats   `json:"disk"`
-	Timestamp int64                     `json:"timestamp"`
+	CPU        servermetrics.CPUStats         `json:"cpu"`
+	Memory     servermetrics.MemoryStats      `json:"memory"`
+	Disk       servermetrics.DiskStats        `json:"disk"`
+	Containers []servermetrics.ContainerStats `json:"containers"`
+	Timestamp  int64                          `json:"timestamp"`
 }
 
 func main() {
@@ -42,58 +43,62 @@ func main() {
 	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()
 
-	for {
-		select {
-		case <-ticker.C:
-			// Collect new CPU stats
-			currentCPUStats, err := servermetrics.GetCPUStats()
-			if err != nil {
-				fmt.Println("Error collecting CPU stats:", err)
-				continue
-			}
+	for range ticker.C {
+		// Collect new CPU stats
+		currentCPUStats, err := servermetrics.GetCPUStats()
+		if err != nil {
+			fmt.Println("Error collecting CPU stats:", err)
+			continue
+		}
 
-			// Collect memory stats
-			memoryStats, err := servermetrics.GetMemoryStats()
-			if err != nil {
-				log.Println("Error collecting memory stats:", err)
-				continue
-			}
+		// Collect memory stats
+		memoryStats, err := servermetrics.GetMemoryStats()
+		if err != nil {
+			log.Println("Error collecting memory stats:", err)
+			continue
+		}
 
-			// Collect disk stats
-			diskStats, err := servermetrics.GetDiskStats("/")
-			if err != nil {
-				log.Println("Error collecting disk stats:", err)
-				continue
-			}
+		// Collect disk stats
+		diskStats, err := servermetrics.GetDiskStats("/")
+		if err != nil {
+			log.Println("Error collecting disk stats:", err)
+			continue
+		}
 
-			// Calculate CPU usage based on the difference between current and previous stats
-			cpuUsage := servermetrics.CalculateCPUUsage(prevCPUStats, currentCPUStats)
+		// Collect container stats
+		containerStats, err := servermetrics.GetContainerStats()
+		if err != nil {
+			log.Println("Error collecting container stats:", err)
+			continue
+		}
 
-			// Update previous stats
-			prevCPUStats = currentCPUStats
+		// Calculate CPU usage based on the difference between current and previous stats
+		cpuUsage := servermetrics.CalculateCPUUsage(prevCPUStats, currentCPUStats)
 
-			// Create a metric struct
-			metric := Metric{
-				CPU:       cpuUsage,
-				Memory:    memoryStats,
-				Disk:      diskStats,
-				Timestamp: time.Now().Unix(),
-			}
+		// Update previous stats
+		prevCPUStats = currentCPUStats
 
-			// Send the metric to the remote server
-			err = sendMetric(metric)
-			if err != nil {
-				fmt.Println("Error sending metric:", err)
-			} else {
-				fmt.Println("Metric sent successfully")
-			}
+		// Create a metric struct
+		metric := Metric{
+			CPU:        cpuUsage,
+			Memory:     memoryStats,
+			Disk:       diskStats,
+			Containers: containerStats,
+			Timestamp:  time.Now().Unix(),
+		}
+
+		// Send the metric to the remote server
+		err = sendMetric(metric)
+		if err != nil {
+			fmt.Println("Error sending metric:", err)
+		} else {
+			fmt.Println("Metric sent successfully")
 		}
 	}
 }
 
 // sendMetric sends the metric to the remote server
 func sendMetric(metric Metric) error {
-
 	data, err := json.Marshal(metric)
 	if err != nil {
 		return err

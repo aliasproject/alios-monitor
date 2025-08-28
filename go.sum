@@ -8,3 +8,7 @@ github.com/aliasproject/servermetrics v0.0.0-20240911165437-35fd84d58a7a h1:HEOG
 github.com/aliasproject/servermetrics v0.0.0-20240911165437-35fd84d58a7a/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
 github.com/aliasproject/servermetrics v0.0.0-20240911172129-5af044960de3 h1:bINvznp1/CIRD046aSf2vJufNOlqyZljRzFTqs0Jly8=
 github.com/aliasproject/servermetrics v0.0.0-20240911172129-5af044960de3/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
+github.com/aliasproject/servermetrics v0.0.0-20250828132921-276b6ccef280 h1:87vmjoUg3T9SO6CbZY0aLpTBsx6FIlQpOnZrGC4U/nM=
+github.com/aliasproject/servermetrics v0.0.0-20250828132921-276b6ccef280/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
+github.com/aliasproject/servermetrics v1.0.0 h1:y2rOKynyf6tto1ZYPmOviKsIAlE+rLDEb6X8KpZPx8E=
+github.com/aliasproject/servermetrics v1.0.0/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
