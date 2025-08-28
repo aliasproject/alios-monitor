@@ -1,14 +1,2 @@
-github.com/aliasproject/servermetrics v0.0.0-20240827145746-456dcb4bd75c h1:VrmuIPaivA6LfJ0SHXkc1968DYnZAV+qlImhgRdBbSg=
-github.com/aliasproject/servermetrics v0.0.0-20240827145746-456dcb4bd75c/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
-github.com/aliasproject/servermetrics v0.0.0-20240827155443-e1dc76c18f69 h1:7C5FrO+8beX5LxO1GIPihlX1f9s+z72bFdYiAepmdYk=
-github.com/aliasproject/servermetrics v0.0.0-20240827155443-e1dc76c18f69/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
-github.com/aliasproject/servermetrics v0.0.0-20240907185703-d59a34c633cd h1:Eal9RnHExIyjfwOUbLdnm85VDtS9HlkVBY5DVcpETWM=
-github.com/aliasproject/servermetrics v0.0.0-20240907185703-d59a34c633cd/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
-github.com/aliasproject/servermetrics v0.0.0-20240911165437-35fd84d58a7a h1:HEOG/4qRxNBUw9c+FUR1uDOG1kemDn74onXVI+1SZ14=
-github.com/aliasproject/servermetrics v0.0.0-20240911165437-35fd84d58a7a/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
-github.com/aliasproject/servermetrics v0.0.0-20240911172129-5af044960de3 h1:bINvznp1/CIRD046aSf2vJufNOlqyZljRzFTqs0Jly8=
-github.com/aliasproject/servermetrics v0.0.0-20240911172129-5af044960de3/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
-github.com/aliasproject/servermetrics v0.0.0-20250828132921-276b6ccef280 h1:87vmjoUg3T9SO6CbZY0aLpTBsx6FIlQpOnZrGC4U/nM=
-github.com/aliasproject/servermetrics v0.0.0-20250828132921-276b6ccef280/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
-github.com/aliasproject/servermetrics v1.0.0 h1:y2rOKynyf6tto1ZYPmOviKsIAlE+rLDEb6X8KpZPx8E=
+github.com/aliasproject/servermetrics v1.0.0 h1:GbxV5Bohi3taHECdVlpdnXh/4XgYVGMbQ/5+VpuOyTk=
 github.com/aliasproject/servermetrics v1.0.0/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
