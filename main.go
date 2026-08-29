@@ -14,8 +14,7 @@ import (
 
 // Version is the agent's own version, e.g. "v1.2.0" -- overridden at build
 // time via -ldflags "-X main.Version=vX.Y.Z" by the release workflow.
-// Left as "dev" for local/manual builds, which Alios treats as "unknown"
-// rather than matching (or claiming to be behind) any real release.
+// Defaults to "dev" for a local/manual build.
 var Version = "dev"
 
 // Metric represents the structure of the metric to send
@@ -35,8 +34,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Allow checking the installed version directly over SSH
-	// (`/opt/alios-monitor --version`) without waiting on a metrics report.
+	// Print the version and exit, instead of waiting for the next report tick.
 	if os.Args[1] == "--version" || os.Args[1] == "-v" {
 		fmt.Println(Version)
 		return
