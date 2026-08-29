@@ -12,8 +12,15 @@ import (
 	"github.com/aliasproject/servermetrics"
 )
 
+// Version is the agent's own version, e.g. "v1.2.0" -- overridden at build
+// time via -ldflags "-X main.Version=vX.Y.Z" by the release workflow.
+// Left as "dev" for local/manual builds, which Alios treats as "unknown"
+// rather than matching (or claiming to be behind) any real release.
+var Version = "dev"
+
 // Metric represents the structure of the metric to send
 type Metric struct {
+	Version    string                         `json:"version"`
 	CPU        servermetrics.CPUStats         `json:"cpu"`
 	Memory     servermetrics.MemoryStats      `json:"memory"`
 	Disk       servermetrics.DiskStats        `json:"disk"`
@@ -26,6 +33,13 @@ func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Error: Usage: alios-monitor <report-url>")
 		os.Exit(1)
+	}
+
+	// Allow checking the installed version directly over SSH
+	// (`/opt/alios-monitor --version`) without waiting on a metrics report.
+	if os.Args[1] == "--version" || os.Args[1] == "-v" {
+		fmt.Println(Version)
+		return
 	}
 
 	// Previous stats for comparison
@@ -80,6 +94,7 @@ func main() {
 
 		// Create a metric struct
 		metric := Metric{
+			Version:    Version,
 			CPU:        cpuUsage,
 			Memory:     memoryStats,
 			Disk:       diskStats,
