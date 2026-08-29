@@ -1,4 +1,4 @@
-module github.com/aliasproject/monitoring-agent
+module github.com/aliasproject/alios-monitor
 
 go 1.23.0
 
