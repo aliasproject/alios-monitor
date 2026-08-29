@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # Picks up new servermetrics tags automatically and opens a PR bumping
+  # go.mod/go.sum here -- merging (or enabling auto-merge on) that PR is
+  # what actually triggers a new monitoring-agent release, once you also
+  # push a new version tag for it.
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"

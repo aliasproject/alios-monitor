@@ -1,0 +1,54 @@
+name: Release
+
+# Fires on a pushed version tag (e.g. `git tag v1.1.0 && git push --tags`),
+# not on every push to main -- keeps "a new commit landed" separate from
+# "this is an actual release users get offered."
+#
+# Assumes both this repo and aliasproject/servermetrics are public -- if
+# either is still private when this runs, `go build` will fail fetching the
+# servermetrics module (no auth step here for that, unlike the old
+# GCS-based version of this workflow).
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write # gh release create needs this
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build binaries
+        run: |
+          VERSION="${{ github.ref_name }}"
+          mkdir -p dist build
+          for arch in amd64 arm64; do
+            GOOS=linux GOARCH=$arch go build -ldflags "-X main.Version=${VERSION}" -o build/alios-monitor .
+            tar -C build -czf "dist/alios-monitor-linux-${arch}.tar.gz" alios-monitor
+            rm build/alios-monitor
+          done
+
+      # Asset names are fixed across releases (alios-monitor-linux-amd64.tar.gz,
+      # not e.g. alios-monitor-v1.1.0-linux-amd64.tar.gz) so that GitHub's
+      # /releases/latest/download/<asset> URL always resolves to the newest
+      # release without any extra "refresh a latest pointer" step -- that's
+      # what InstallMonitoringAgent (in the main alios repo) targets for a
+      # fresh install, and what Alios's update check compares against via
+      # the GitHub API's /releases/latest endpoint for the version tag.
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            dist/alios-monitor-linux-amd64.tar.gz \
+            dist/alios-monitor-linux-arm64.tar.gz \
+            --title "${{ github.ref_name }}" \
+            --generate-notes
