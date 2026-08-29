@@ -2,10 +2,9 @@
 
 A small, standalone Go agent that reports CPU, memory, disk, and Docker
 container statistics from a Linux host to a remote HTTP endpoint once a
-minute. Built for [Alios](https://alios.app) to monitor servers it manages,
-but it has no Alios-specific logic in it — it only collects and reports data;
-what's done with that data is entirely up to whatever's on the other end of
-the report URL.
+minute. It has no opinion about what happens to that data — it only collects
+and reports it; what's done with that data is entirely up to whatever's on
+the other end of the report URL.
 
 Metric collection itself (reading `/proc/stat`, `/proc/meminfo`, disk usage,
 and `docker stats`) lives in the separate
