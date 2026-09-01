@@ -24,7 +24,12 @@ type Metric struct {
 	Memory     servermetrics.MemoryStats      `json:"memory"`
 	Disk       servermetrics.DiskStats        `json:"disk"`
 	Containers []servermetrics.ContainerStats `json:"containers"`
-	Timestamp  int64                          `json:"timestamp"`
+	// ContainerList is identity/lifecycle-state data (image, state, ports)
+	// for every container, running or not -- a separate collector from
+	// Containers (docker stats, running-only) since docker ps -a is the
+	// only source that ever reports a stopped container.
+	ContainerList []servermetrics.ContainerInfo `json:"container_list"`
+	Timestamp     int64                         `json:"timestamp"`
 }
 
 func main() {
@@ -84,6 +89,13 @@ func main() {
 			continue
 		}
 
+		// Collect container list (image/state/ports, including stopped containers)
+		containerList, err := servermetrics.GetContainerList()
+		if err != nil {
+			log.Println("Error collecting container list:", err)
+			continue
+		}
+
 		// Calculate CPU usage based on the difference between current and previous stats
 		cpuUsage := servermetrics.CalculateCPUUsage(prevCPUStats, currentCPUStats)
 
@@ -92,12 +104,13 @@ func main() {
 
 		// Create a metric struct
 		metric := Metric{
-			Version:    Version,
-			CPU:        cpuUsage,
-			Memory:     memoryStats,
-			Disk:       diskStats,
-			Containers: containerStats,
-			Timestamp:  time.Now().Unix(),
+			Version:       Version,
+			CPU:           cpuUsage,
+			Memory:        memoryStats,
+			Disk:          diskStats,
+			Containers:    containerStats,
+			ContainerList: containerList,
+			Timestamp:     time.Now().Unix(),
 		}
 
 		// Send the metric to the remote server
