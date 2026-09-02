@@ -1,4 +1,2 @@
-github.com/aliasproject/servermetrics v1.0.0 h1:GbxV5Bohi3taHECdVlpdnXh/4XgYVGMbQ/5+VpuOyTk=
-github.com/aliasproject/servermetrics v1.0.0/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
-github.com/aliasproject/servermetrics v1.1.0 h1:Ya9qgvvZtYKAz93nRGxLfsuEsJC6cXXtMAbWlNzNiB8=
-github.com/aliasproject/servermetrics v1.1.0/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
+github.com/aliasproject/servermetrics v1.3.0 h1:x7alfN4qylQUMQCDi217Mz0BYJa8Zc/Lzp+WSTu97KU=
+github.com/aliasproject/servermetrics v1.3.0/go.mod h1:DffUJRLcNnne4Eu08jr3i1NqNT6XuI22/+o0umw++Pw=
